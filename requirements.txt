@@ -3,3 +3,4 @@ faunadb
 bcrypt
 flask-cors
 python-dotenv
+python-telegram-bot==12.8

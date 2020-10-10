@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
+
 app = Flask(__name__)
 CORS(app)
 
-from services import index
-app.add_url_rule('/', methods=['GET'],  view_func=index.hello_world)
+from services import bot_service
+app.add_url_rule('/', methods=['GET'],  view_func=bot_service.hello_world)
+app.add_url_rule('/', methods=['POST'],  view_func=bot_service.hi)
 
 from services import user_service
 app.add_url_rule('/user/update', methods=['PUT'],  view_func=user_service.update_user)
