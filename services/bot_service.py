@@ -1,6 +1,7 @@
 import os
+import json
 from telegram import Bot
-from flask import request, jsonify
+from flask import request
 
 def get_bot():
     bot = Bot(os.environ.get("MASWOWO_BOT_TOKEN"))
@@ -11,4 +12,5 @@ def hello_world():
 
 def hi():
     update = request.get_json()
-    bot.send_message(chat_id=update['message']['chat']['id'], text=jsonify(update))
+    bot = get_bot()
+    bot.send_message(chat_id=update['message']['chat']['id'], text=json.dumps(update))
