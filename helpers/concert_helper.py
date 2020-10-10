@@ -1,8 +1,8 @@
-from entities.faunadb_entity import get, get_by_index, create, update, delete
+from entities.faunadb_entity import get, get_multiple, create, update, delete
 
 def get_all_concerts():
     try:
-        return get_by_index('all_concerts')
+        return get_multiple('all_concerts')
     except Exception as ex:
         raise ex
 
@@ -14,7 +14,7 @@ def get_concert_by_id(id):
 
 def get_concert_by_artist(data):
     try:
-        return get('concert_by_artist', data)
+        return get_multiple('concert_by_artist', data)
     except Exception as ex:
         raise ex
 
@@ -26,7 +26,7 @@ def get_concert_by_price(data):
 
 def get_concert_by_tags(data):
     try:
-        return get('concert_by_tags', data)
+        return get_multiple('concert_by_tags', data)
     except Exception as ex:
         raise ex
 

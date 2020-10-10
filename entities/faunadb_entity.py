@@ -3,12 +3,41 @@ from faunadb import query as q
 from faunadb.objects import Ref
 from faunadb.client import FaunaClient
 
-def get_by_index(index):
+def get_multiple(index, data=None):
     try:
         serverClient = FaunaClient(secret=os.environ.get("FAUNA_SERVER_SECRET"))
-        res = serverClient.query(q.get(q.match(q.index(index))))
-        res["data"]["id"] = res["ref"].id()
-        return res["data"]
+        res_arr = []
+        if data is None:
+            res = serverClient.query(   
+                q.map_(
+                    q.lambda_("data", q.get(q.var("data"))), 
+                    q.paginate(q.match(q.index(index)))
+                )
+            )
+            res_arr.extend(res["data"])
+        elif isinstance(data, list):
+            for x in data:
+                res = serverClient.query(   
+                    q.map_(
+                        q.lambda_("data", q.get(q.var("data"))), 
+                        q.paginate(q.match(q.index(index), x))
+                    )
+                )
+                res_arr.extend(res["data"])
+        else:
+            res = serverClient.query(   
+                q.map_(
+                    q.lambda_("data", q.get(q.var("data"))), 
+                    q.paginate(q.match(q.index(index), data))
+                )
+            )
+            res_arr.extend(res["data"])
+
+        arr = []
+        for x in res_arr:
+            x["data"]["id"] = x["ref"].id()
+            arr.append(x["data"])
+        return arr
     except Exception as ex:
         raise ex
 
