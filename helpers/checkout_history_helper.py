@@ -6,6 +6,12 @@ def get_checkout_history_by_email(data):
     except Exception as ex:
         raise ex
 
+def get_checkout_history_by_id(id):
+    try:
+        return get_by_id('checkout_history', id)
+    except Exception as ex:
+        raise ex
+
 def create_checkout_history(data):
     try:
         return create('checkout_history', data)

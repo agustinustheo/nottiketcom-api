@@ -8,6 +8,13 @@ def get_checkout_history_by_email():
     except Exception as ex:
         raise ex
 
+def get_checkout_history_by_id():
+    try:
+        req_data = request.get_json()
+        return jsonify(checkout_history_helper.get_checkout_history_by_id(req_data["id"]))
+    except Exception as ex:
+        raise ex
+
 def create_checkout_history():
     try:
         req_data = request.get_json()

@@ -7,6 +7,13 @@ def get_all_concerts():
     except Exception as ex:
         raise ex
 
+def get_concert_by_id():
+    try:
+        req_data = request.get_json()
+        return jsonify(concert_helper.get_concert_by_id(req_data["id"]))
+    except Exception as ex:
+        raise ex
+
 def get_concert_by_artist():
     try:
         req_data = request.get_json()

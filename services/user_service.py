@@ -20,6 +20,13 @@ def login_user():
     except Exception as ex:
         raise ex
 
+def get_user_by_id():
+    try:
+        req_data = request.get_json()
+        return jsonify(user_helper.get_user_by_id(req_data["id"]))
+    except Exception as ex:
+        raise ex
+
 def get_user_by_telegram_id():
     try:
         req_data = request.get_json()

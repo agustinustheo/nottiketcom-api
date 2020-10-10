@@ -18,6 +18,12 @@ def get_user_by_username(data):
     except Exception as ex:
         raise ex
 
+def get_user_by_id(id):
+    try:
+        return get_by_id('users', id)
+    except Exception as ex:
+        raise ex
+
 def create_user(data):
     try:
         return create('users', data)

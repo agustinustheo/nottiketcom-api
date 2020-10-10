@@ -8,6 +8,20 @@ def get_telegram_by_otp():
     except Exception as ex:
         raise ex
 
+def get_telegram_by_chat_id():
+    try:
+        req_data = request.get_json()
+        return jsonify(telegram_helper.get_telegram_by_chat_id(req_data["chat_id"]))
+    except Exception as ex:
+        raise ex
+
+def get_telegram_by_telegram_id():
+    try:
+        req_data = request.get_json()
+        return jsonify(telegram_helper.get_telegram_by_telegram_id(req_data["telegram_id"]))
+    except Exception as ex:
+        raise ex
+
 def create_telegram():
     try:
         req_data = request.get_json()

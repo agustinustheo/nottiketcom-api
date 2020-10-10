@@ -1,3 +1,5 @@
 Flask
 faunadb
 bcrypt
+flask-cors
+python-dotenv

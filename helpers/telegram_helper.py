@@ -6,6 +6,24 @@ def get_telegram_by_otp(data):
     except Exception as ex:
         raise ex
 
+def get_telegram_by_chat_id(id):
+    try:
+        return get('telegram_by_chat_id', id)
+    except Exception as ex:
+        raise ex
+
+def get_telegram_by_telegram_id(id):
+    try:
+        return get('telegram_by_telegram_id', id)
+    except Exception as ex:
+        raise ex
+
+def get_telegram_by_id(id):
+    try:
+        return get_by_id('telegram', id)
+    except Exception as ex:
+        raise ex
+
 def create_telegram(data):
     try:
         return create('telegram', data)

@@ -6,6 +6,12 @@ def get_all_concerts():
     except Exception as ex:
         raise ex
 
+def get_concert_by_id(id):
+    try:
+        return get_by_id('concerts', id)
+    except Exception as ex:
+        raise ex
+
 def get_concert_by_artist(data):
     try:
         return get('concert_by_artist', data)
