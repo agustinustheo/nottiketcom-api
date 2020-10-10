@@ -3,7 +3,7 @@ from telegram import Bot
 from flask import request, jsonify
 
 def get_bot():
-    bot = Bot(os.environ.get("BOT_TOKEN"))
+    bot = Bot(os.environ.get("MASWOWO_BOT_TOKEN"))
     return bot
 
 def hello_world():
