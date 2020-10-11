@@ -8,9 +8,11 @@ def get_bot():
     return bot
 
 def hello_world():
-    return 'Hello, World!'
+    return "Hello, World!"
 
 def hi():
     update = request.get_json()
     bot = get_bot()
-    bot.send_message(chat_id=update['message']['chat']['id'], text=json.dumps(update))
+    bot.send_message(chat_id=update["message"]["chat"]["id"], text=json.dumps(update))
+    return "Message sent!"
+

@@ -10,7 +10,7 @@ app.add_url_rule('/', methods=['POST'],  view_func=bot_service.hi)
 
 from services import user_service
 app.add_url_rule('/user/update', methods=['PUT'],  view_func=user_service.update_user)
-app.add_url_rule('/user/login', methods=['POST'],  view_func=user_service.login_user)
+app.add_url_rule('/user/login', methods=['GET'],  view_func=user_service.login_user)
 app.add_url_rule('/user/create', methods=['POST'],  view_func=user_service.create_user)
 app.add_url_rule('/user/delete', methods=['DELETE'],  view_func=user_service.delete_user)
 app.add_url_rule('/user/email', methods=['POST'],  view_func=user_service.get_user_by_email)
