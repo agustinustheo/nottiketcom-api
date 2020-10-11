@@ -9,13 +9,11 @@ app.add_url_rule('/', methods=['GET'],  view_func=bot_service.hello_world)
 app.add_url_rule('/', methods=['POST'],  view_func=bot_service.bot_start)
 
 from services import user_service
-app.add_url_rule('/user/update', methods=['PUT'],  view_func=user_service.update_user)
+app.add_url_rule('/user/otp', methods=['POST'],  view_func=user_service.otp_user)
 app.add_url_rule('/user/login', methods=['GET'],  view_func=user_service.login_user)
+app.add_url_rule('/user/update', methods=['PUT'],  view_func=user_service.update_user)
 app.add_url_rule('/user/create', methods=['POST'],  view_func=user_service.create_user)
 app.add_url_rule('/user/delete', methods=['DELETE'],  view_func=user_service.delete_user)
-app.add_url_rule('/user/email', methods=['POST'],  view_func=user_service.get_user_by_email)
-app.add_url_rule('/user/username', methods=['POST'],  view_func=user_service.get_user_by_username)
-app.add_url_rule('/user/telegram/id', methods=['POST'],  view_func=user_service.get_user_by_telegram_id)
 
 from services import telegram_service
 app.add_url_rule('/telegram/otp', methods=['POST'],  view_func=telegram_service.get_telegram_by_otp)

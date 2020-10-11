@@ -26,13 +26,21 @@ def get_user_by_id(id):
 
 def create_user(data):
     try:
-        return create('users', data)
+        res = create('users', data)
+        # Delete sensitive information
+        res.pop('otp', None)
+        res.pop('password', None)
+        return res
     except Exception as ex:
         raise ex
 
 def update_user(id, data):
     try:
-        return update('users', id, data)
+        res = update('users', id, data)
+        # Delete sensitive information
+        res.pop('otp', None)
+        res.pop('password', None)
+        return res
     except Exception as ex:
         raise ex
 

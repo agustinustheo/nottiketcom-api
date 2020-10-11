@@ -1,12 +1,15 @@
 import base64
 from flask import request, jsonify
 from helpers.bcrypt_helper import hash_password, check_password
-from helpers import user_helper
+from helpers import user_helper, telegram_helper
 
-def get_user_by_email():
+def otp_user():
     try:
         req_data = request.get_json()
-        return jsonify(user_helper.get_user_by_email(req_data["email"]))
+        otp = base64.b64decode(request.headers['Authorization'].split()[1].encode('ascii')).decode('ascii')
+        t_res = telegram_helper.get_telegram_by_otp(otp)
+        user_res = user_helper.update_user(req_data["id"], t_res)
+        return user_res
     except Exception as ex:
         raise ex
 
@@ -15,7 +18,7 @@ def login_user():
         email, password = base64.b64decode(request.headers['Authorization'].split()[1].encode('ascii')).decode('ascii').split(":")
         res = user_helper.get_user_by_email(email)
         if check_password(password, res["password"]):
-            return jsonify({"login_status": True})
+            return jsonify({"login_status": True, "user_id": res["id"]})
         return jsonify({"login_status": False})
     except Exception as ex:
         raise ex
@@ -24,20 +27,6 @@ def get_user_by_id():
     try:
         req_data = request.get_json()
         return jsonify(user_helper.get_user_by_id(req_data["id"]))
-    except Exception as ex:
-        raise ex
-
-def get_user_by_telegram_id():
-    try:
-        req_data = request.get_json()
-        return jsonify(user_helper.get_user_by_telegram_id(req_data["telegram_id"]))
-    except Exception as ex:
-        raise ex
-
-def get_user_by_username():
-    try:
-        req_data = request.get_json()
-        return jsonify(user_helper.get_user_by_username(req_data["username"]))
     except Exception as ex:
         raise ex
 
