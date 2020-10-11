@@ -198,11 +198,14 @@ def order(update, args):
     
 def bot_start():
     update = request.get_json()
-    received_message = update["message"]["text"]
-    if len(received_message.split()) > 1:
-        switch_with_args(update, received_message)
-    else:
-        switch_without_args(update, received_message)
+    try:    
+        received_message = update["message"]["text"]
+        if len(received_message.split()) > 1:
+            switch_with_args(update, received_message)
+        else:
+            switch_without_args(update, received_message)
+    except Exception as ex:
+        print(ex)
     return "Message sent!"
 
 def switch_with_args(update, received_message):
