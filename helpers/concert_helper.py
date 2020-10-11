@@ -1,4 +1,4 @@
-from entities.faunadb_entity import get, get_multiple, create, update, delete
+from entities.faunadb_entity import get, get_multiple, get_by_id, create, update, delete
 
 def get_all_concerts():
     try:

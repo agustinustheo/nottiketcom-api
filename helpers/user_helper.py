@@ -1,4 +1,4 @@
-from entities.faunadb_entity import get, create, update, delete
+from entities.faunadb_entity import get, get_by_id, create, update, delete
 
 def get_user_by_email(data):
     try:
