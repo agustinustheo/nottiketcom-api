@@ -3,6 +3,7 @@ import http.client
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler, MessageHandler, Filters
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
+import os
 
 def start(bot, update):
     chat_id = update.message.chat_id
@@ -27,8 +28,10 @@ def echo(bot, update):
 
     # Get a response to the input text 'I would like to book a flight.'
     response = chatbot.get_response(update.message.text)
-
-    bot.send_message(chat_id=chat_id, text=str(response))
+    if response.confidence <= 0.4:
+        bot.send_message(chat_id=chat_id, text="Maaf, Wowo belum mengerti maksudmu, bolehkah diulang lagi? :(")
+    else:
+        bot.send_message(chat_id=chat_id, text=str(response))
 
 def search_by_artist(bot, update, args):
     chat_id = update.message.chat_id

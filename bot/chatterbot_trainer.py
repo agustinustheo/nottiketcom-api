@@ -17,6 +17,7 @@ trainer = ChatterBotCorpusTrainer(chatbot)
 directory = 'conversation_dataset'
 
 # trainer.train("./greetings.corpus.json", "./conversations.yaml", "./concert2020-10-10T14-02-28.272419.yml")
+chatbot.storage.drop()
 
 for filename in os.listdir(directory):
     # exclude greetings and conversation dataset
