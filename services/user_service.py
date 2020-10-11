@@ -9,7 +9,8 @@ def otp_user():
         otp = base64.b64decode(request.headers['Authorization'].split()[1].encode('ascii')).decode('ascii')
         t_res = telegram_helper.get_telegram_by_otp(otp)
         user_res = user_helper.update_user(req_data["id"], t_res)
-        return user_res
+        telegram_helper.delete_telegram(t_res["id"], t_res)
+        return jsonify(user_res)
     except Exception as ex:
         raise ex
 
