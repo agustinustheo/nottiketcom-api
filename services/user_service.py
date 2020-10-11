@@ -9,9 +9,10 @@ def otp_user():
         req_data = request.get_json()
         otp = base64.b64decode(request.headers['Authorization'].split()[1].encode('ascii')).decode('ascii')
         t_res = telegram_helper.get_telegram_by_otp(otp)
+        t_res_id = t_res["id"]
         t_res.pop('id', None)
         user_res = user_helper.update_user(req_data["id"], t_res)
-        telegram_helper.delete_telegram(t_res["id"])
+        telegram_helper.delete_telegram(t_res_id)
         send_otp_confirmation(user_res["chat_id"])
         return jsonify(user_res)
     except Exception as ex:
