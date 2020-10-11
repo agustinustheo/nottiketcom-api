@@ -34,7 +34,7 @@ def send_checkout_confirmation(chat_id, concert_id, checkout_id):
     try:
         res = {}
         bot = get_bot()
-        message = f'Concert number {concert_id} has successfully been purchased! Ticket details can be seen here https://nottiketcom.xyz/tiket/{checkout_id}\n'
+        message = f'Concert number {concert_id} has successfully been purchased! Ticket details can be seen here https://nottiketcom.xyz/ticket/{checkout_id}\n'
         message += f'Thank you for trusting us, we hope you will enjoy the concert!'
         bot.send_message(chat_id=chat_id, text=message)
     except Exception as ex:
