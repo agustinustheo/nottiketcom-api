@@ -20,7 +20,7 @@ def get_multiple(index, data=None):
                 res = serverClient.query(   
                     q.map_(
                         q.lambda_("data", q.get(q.var("data"))), 
-                        q.paginate(q.match(q.index(index), x))
+                        q.paginate(q.match(q.index(index), q.casefold(x)))
                     )
                 )
                 res_arr.extend(res["data"])
@@ -28,7 +28,7 @@ def get_multiple(index, data=None):
             res = serverClient.query(   
                 q.map_(
                     q.lambda_("data", q.get(q.var("data"))), 
-                    q.paginate(q.match(q.index(index), data))
+                    q.paginate(q.match(q.index(index), q.casefold(data)))
                 )
             )
             res_arr.extend(res["data"])
