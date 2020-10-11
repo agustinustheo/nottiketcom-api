@@ -62,6 +62,6 @@ def bot_start():
         "/start": start,
         "/help": help_
     }
-    func = switcher.get(received_message, lambda: "Invalid month")
+    func = switcher.get(received_message, help)
     func(update)
     return "Message sent!"

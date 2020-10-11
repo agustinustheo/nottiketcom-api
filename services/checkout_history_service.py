@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from helpers import checkout_history_helper
+from helpers import checkout_history_helper, cart_helper
 
 def get_checkout_history_by_email():
     try:
@@ -18,7 +18,12 @@ def get_checkout_history_by_id():
 def create_checkout_history():
     try:
         req_data = request.get_json()
-        return jsonify(checkout_history_helper.create_checkout_history(req_data))
+        res = cart_helper.get_cart_by_id(req_data["id"])
+        res["cart_id"] = res["id"]
+        res.pop('id', None)
+
+        cart_helper.delete_cart(res["cart_id"])
+        return jsonify(checkout_history_helper.create_checkout_history(res))
     except Exception as ex:
         raise ex
 
