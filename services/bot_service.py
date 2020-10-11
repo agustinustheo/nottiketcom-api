@@ -66,7 +66,7 @@ def start(update):
                 body["telegram_id"] = update["message"]["from"]["id"]
                 res = create_telegram(body)
             
-            message = f'Welcome {update["message"]["from"]["username"]} My name is Wowo and I will be your helper bot. I need to validate who you are, so please enter this code {res["otp"]} when you login/register using your nottiketcom account.\n\nAccess your account here https://nottiketcom.xyz/login'
+            message = f'Welcome {update["message"]["from"]["first_name"]} My name is Wowo and I will be your helper bot. I need to validate who you are, so please enter this code {res["otp"]} when you login/register using your nottiketcom account.\n\nAccess your account here https://nottiketcom.xyz/login'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
@@ -88,7 +88,7 @@ def help_(update):
         except Exception as ex:
             print(ex)
 
-            message = f'Sorry {update["message"]["from"]["username"]} you have not registered this account please chat /start to begin registration'
+            message = f'Sorry {update["message"]["from"]["first_name"]} you have not registered this account please chat /start to begin registration'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
@@ -109,7 +109,7 @@ def concerts(update):
         except Exception as ex:
             print(ex)
 
-            message = f'Sorry {update["message"]["from"]["username"]} you have not registered this account please chat /start to begin registration'
+            message = f'Sorry {update["message"]["from"]["first_name"]} you have not registered this account please chat /start to begin registration'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
@@ -133,7 +133,7 @@ def concert_by_tags(update, args):
         except Exception as ex:
             print(ex)
 
-            message = f'Sorry {update["message"]["from"]["username"]} you have not registered this account please chat /start to begin registration'
+            message = f'Sorry {update["message"]["from"]["first_name"]} you have not registered this account please chat /start to begin registration'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
@@ -157,7 +157,7 @@ def concert_by_artist(update, args):
         except Exception as ex:
             print(ex)
 
-            message = f'Sorry {update["message"]["from"]["username"]} you have not registered this account please chat /start to begin registration'
+            message = f'Sorry {update["message"]["from"]["first_name"]} you have not registered this account please chat /start to begin registration'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
@@ -191,7 +191,7 @@ def order(update, args):
         except Exception as ex:
             print(ex)
 
-            message = f'Sorry {update["message"]["from"]["username"]} you have not registered this account please chat /start to begin registration'
+            message = f'Sorry {update["message"]["from"]["first_name"]} you have not registered this account please chat /start to begin registration'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
