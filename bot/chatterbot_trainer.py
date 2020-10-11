@@ -21,7 +21,7 @@ chatbot.storage.drop()
 
 for filename in os.listdir(directory):
     # exclude greetings and conversation dataset
-    if filename.endswith(".yml") and filename != "conversations.yaml": 
+    if not filename.endswith(".py"): 
         trainer.train(directory + "/" + filename)
 
 # Now we can export the data to a file

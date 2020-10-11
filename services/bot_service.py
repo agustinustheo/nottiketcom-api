@@ -2,6 +2,7 @@ import os
 import json
 from telegram import Bot
 from flask import request
+from helpers.speech_helper import respond
 from helpers.id_helper import generate_id
 from helpers.cart_helper import create_cart
 from helpers.user_helper import get_user_by_telegram_id
@@ -92,12 +93,6 @@ def help_(update):
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
-
-def make_lines():
-    lines = ""
-    for x in range(10):
-        lines += "-"
-    return lines
 
 def concerts(update):
     try:
@@ -232,5 +227,18 @@ def switch_without_args(update, received_message):
         "/start": start,
         "/concerts": concerts
     }
-    func = switcher.get(received_message, help_)
+    func = switcher.get(received_message, echo)
     func(update)
+
+def echo(update):
+    try:
+        bot = get_bot()
+        message = ""
+        chat = update["message"]["text"]
+        if chat[0] == '/':
+            message += f'Sorry, Wowo does not recognize your command, try asking for /help'
+        else:
+            message += respond(chat)
+        bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
+    except Exception as ex:
+        print(ex)
