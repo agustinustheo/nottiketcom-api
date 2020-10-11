@@ -3,9 +3,10 @@ import json
 from telegram import Bot
 from flask import request
 from helpers.id_helper import generate_id
+from helpers.cart_helper import create_cart
 from helpers.user_helper import get_user_by_telegram_id
 from helpers.telegram_helper import create_telegram, get_telegram_by_telegram_id
-from helpers.concert_helper import get_all_concerts, get_concert_by_tags, get_concert_by_artist
+from helpers.concert_helper import get_all_concerts, get_concert_by_tags, get_concert_by_artist, get_concert_by_id
 
 def get_bot():
     bot = Bot(os.environ.get("MASWOWO_BOT_TOKEN"))
@@ -84,7 +85,6 @@ def concerts(update):
 
 def concert_by_tags(update, args):
     try:
-        res = {}
         bot = get_bot()
         try:
             res = get_concert_by_tags(args)
@@ -109,7 +109,6 @@ def concert_by_tags(update, args):
 
 def concert_by_artist(update, args):
     try:
-        res = {}
         bot = get_bot()
         try:
             res = get_concert_by_artist(args)
@@ -134,17 +133,25 @@ def concert_by_artist(update, args):
 
 def order(update, args):
     try:
-        res = {}
         bot = get_bot()
         try:
-            res = get_concert_by_artist(args)
-            message = f'Here are all the online concerts by {str(args)} we have this month:\n'
-            for idx, x in enumerate(res):
-                message+= f'\n{idx+1}. Item Id: {x["id"]}\n'
-                message+= f'    Name:    {x["name"]}\n'
-                message+= f'    Date:    {x["date"]}\n'
-                message+= f'    Price:    {x["price"]}\n'
-            bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
+            if len(args) > 0:
+                res = []
+                user_data = get_user_by_telegram_id(update["message"]["from"]["id"])
+                for x in args:
+                    body = {}
+                    body["name"] = user_data["username"]
+                    body["email"] = user_data["email"]
+                    body["cart"] = get_concert_by_id(x)
+                    res.append(create_cart(body))
+                message = f'You ordered {len(res)} concerts and it has been added to your cart\n'
+                for idx, x in enumerate(res):
+                    message+= f'\n{idx+1}. Order Id: {x["id"]}\n'
+                    message+= f'    Url:    https://nottiketcom.xyz/cart/{x["id"]}\n'
+                bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
+            else:
+                message = f'Please tell me which concert you want to watch, just give me the Id\n'
+                bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
         except Exception as ex:
             print(ex)
 
@@ -163,11 +170,9 @@ def bot_start():
     return "Message sent!"
 
 def switch_with_args(update, received_message):
-    print(received_message)
     received_message = received_message.split()
     case = received_message[0]
     args = received_message[1:]
-    print(case, args)
     switcher = {
         "/order": order,
         "/concert_by_tags": concert_by_tags,
