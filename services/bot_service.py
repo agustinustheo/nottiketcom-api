@@ -15,13 +15,44 @@ def get_bot():
 def hello_world():
     return "Hello, World!"
 
+def send_otp_confirmation(chat_id):
+    try:
+        res = {}
+        bot = get_bot()
+        message = f'You have been authenticated! Hi there! My name is Wowo and I will be your helper bot. I can help you find concert tickets if you want? You an also command me to do some other stuff using these commands:\n\n'
+        message += '/start - Authenticate user with a telegram profile\n'
+        message += '/concerts - Looks up all the recent concerts available\n'
+        message += '/concert_by_tags - Search for concerts by tags\n'
+        message += '/concert_by_artist - Search for concerts by artist name\n'
+        message += '/order - Add concert to cart by concert Id\n'
+        message += '/help - Shows the entire command list for the bot\n'
+        bot.send_message(chat_id=chat_id, text=message)
+    except Exception as ex:
+        print(ex)
+
+def send_checkout_confirmation(chat_id, concert_id, checkout_id):
+    try:
+        res = {}
+        bot = get_bot()
+        message = f'Concert number {concert_id} has successfully been purchased! Ticket details can be seen here https://nottiketcom.xyz/tiket/{checkout_id}\n'
+        message += f'Thank you for trusting us, we hope you will enjoy the concert!'
+        bot.send_message(chat_id=chat_id, text=message)
+    except Exception as ex:
+        print(ex)
+
 def start(update):
     try:
         res = {}
         bot = get_bot()
         try:
             res = get_user_by_telegram_id(update["message"]["from"]["id"])
-            message = f'Welcome back {res["username"]}, glad to see you! My name is Wowo and I will be your helper bot. I can help you find concert tickets if you want? You an also command me to do some other stuff using these commands:\n\n/help\n/concert'
+            message = f'Welcome back {res["username"]}, glad to see you! My name is Wowo and I will be your helper bot. I can help you find concert tickets if you want? You an also command me to do some other stuff using these commands:\n\n'
+            message += '/start - Authenticate user with a telegram profile\n'
+            message += '/concerts - Looks up all the recent concerts available\n'
+            message += '/concert_by_tags - Search for concerts by tags\n'
+            message += '/concert_by_artist - Search for concerts by artist name\n'
+            message += '/order - Add concert to cart by concert Id\n'
+            message += '/help - Shows the entire command list for the bot\n'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
         except:
             try:
@@ -46,7 +77,13 @@ def help_(update):
         bot = get_bot()
         try:
             res = get_user_by_telegram_id(update["message"]["from"]["id"])
-            message = f'Welcome back {res["username"]}, glad to see you! My name is Wowo and I will be your helper bot. I can help you find concert tickets if you want? You an also command me to do some other stuff using these commands:\n\n/help\n/concert'
+            message = f'Welcome back {res["username"]}, glad to see you! My name is Wowo and I will be your helper bot. I can help you find concert tickets if you want? You an also command me to do some other stuff using these commands:\n\n'
+            message += '/start - Authenticate user with a telegram profile\n'
+            message += '/concerts - Looks up all the recent concerts available\n'
+            message += '/concert_by_tags - Search for concerts by tags\n'
+            message += '/concert_by_artist - Search for concerts by artist name\n'
+            message += '/order - Add concert to cart by concert Id\n'
+            message += '/help - Shows the entire command list for the bot\n'
             bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
         except Exception as ex:
             print(ex)

@@ -2,6 +2,7 @@ import base64
 from flask import request, jsonify
 from helpers.bcrypt_helper import hash_password, check_password
 from helpers import user_helper, telegram_helper
+from services.bot_service import send_otp_confirmation
 
 def otp_user():
     try:
@@ -10,6 +11,7 @@ def otp_user():
         t_res = telegram_helper.get_telegram_by_otp(otp)
         user_res = user_helper.update_user(req_data["id"], t_res)
         telegram_helper.delete_telegram(t_res["id"])
+        send_otp_confirmation(user_res["chat_id"])
         return jsonify(user_res)
     except Exception as ex:
         raise ex
