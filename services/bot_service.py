@@ -175,17 +175,22 @@ def order(update, args):
             if len(args) > 0:
                 res = []
                 user_data = get_user_by_telegram_id(update["message"]["from"]["id"])
-                for x in args:
-                    body = {}
-                    body["name"] = user_data["username"]
-                    body["email"] = user_data["email"]
-                    body["cart"] = get_concert_by_id(x)
-                    res.append(create_cart(body))
-                message = f'You ordered {len(res)} concerts and it has been added to your cart\n'
-                for idx, x in enumerate(res):
-                    message+= f'\n{idx+1}. Order Id: {x["id"]}\n'
-                    message+= f'    Url:    https://nottiketcom.xyz/cart/{x["id"]}\n'
-                bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
+                try:
+                    for x in args:
+                        body = {}
+                        body["name"] = user_data["username"]
+                        body["email"] = user_data["email"]
+                        body["cart"] = get_concert_by_id(x)
+                        res.append(create_cart(body))
+                    message = f'You ordered {len(res)} concerts and it has been added to your cart\n'
+                    for idx, x in enumerate(res):
+                        message+= f'\n{idx+1}. Order Id: {x["id"]}\n'
+                        message+= f'    Url:    https://nottiketcom.xyz/cart/{x["id"]}\n'
+                    bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
+                except Exception as ex:
+                    print(ex)
+                    message = "Something is not right... Are you sure you entered the correct Id?"
+                    bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
             else:
                 message = f'Please tell me which concert you want to watch, just give me the Id\n'
                 bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
