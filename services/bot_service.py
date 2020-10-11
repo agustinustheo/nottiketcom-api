@@ -19,7 +19,7 @@ def start(update):
         try:
             res = get_user_by_telegram_id(update["message"]["from"]["id"])
             message = f"Welcome back {res["username"]}, glad to see you! My name is Wowo and I will be your helper bot. I can help you find concert tickets if you want? You an also command me to do some other stuff using these commands:\n\n/help\n/concert"
-            bot.send_message(chat_id=update["message"]["from"]["id"], text=message)
+            bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
         except:
             try:
                 res = get_telegram_by_telegram_id(update["message"]["from"]["id"])
@@ -31,7 +31,7 @@ def start(update):
                 res = create_telegram(body)
             
             message = f"Welcome {update["message"]["from"]["username"]} My name is Wowo and I will be your helper bot. I need to validate who you are, so please enter this code {res["otp"]} when you login/register using your nottiketcom account.\nAccess your account here https://nottiketcom.xyz/login"
-            bot.send_message(chat_id=update["message"]["from"]["id"], text=message)
+            bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
 
@@ -42,10 +42,10 @@ def help_(update):
         try:
             res = get_user_by_telegram_id(update["message"]["from"]["id"])
             message = f"Welcome back {res["username"]}, glad to see you! My name is Wowo and I will be your helper bot. I can help you find concert tickets if you want? You an also command me to do some other stuff using these commands:\n\n/help\n/concert"
-            bot.send_message(chat_id=update["message"]["from"]["id"], text=message)
+            bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
         except:
             message = f"Sorry {update["message"]["from"]["username"]} you have not registered this account please chat /start to begin registration"
-            bot.send_message(chat_id=update["message"]["from"]["id"], text=message)
+            bot.send_message(chat_id=update["message"]["chat"]["id"], text=message)
     except Exception as ex:
         print(ex)
     
