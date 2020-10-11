@@ -6,7 +6,7 @@ CORS(app)
 
 from services import bot_service
 app.add_url_rule('/', methods=['GET'],  view_func=bot_service.hello_world)
-app.add_url_rule('/', methods=['POST'],  view_func=bot_service.hi)
+app.add_url_rule('/', methods=['POST'],  view_func=bot_service.bot_start)
 
 from services import user_service
 app.add_url_rule('/user/update', methods=['PUT'],  view_func=user_service.update_user)
