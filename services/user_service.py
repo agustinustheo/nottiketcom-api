@@ -19,7 +19,7 @@ def login_user():
         email, password = base64.b64decode(request.headers['Authorization'].split()[1].encode('ascii')).decode('ascii').split(":")
         res = user_helper.get_user_by_email(email)
         if check_password(password, res["password"]):
-            return jsonify({"login_status": True, "user_id": res["id"]})
+            return jsonify({"login_status": True, "id": res["id"]})
         return jsonify({"login_status": False})
     except Exception as ex:
         raise ex
